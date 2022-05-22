@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import com.dani.addressBook.domain.Contact;
+import com.dani.addressBook.dto.ContactDTO;
 import com.dani.addressBook.service.ContactService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,12 +29,12 @@ public class ContactResource {
     private ContactService contactService;
 
     @GetMapping
-    public List<Contact> getAllContacts(){
+    public List<ContactDTO> getAllContacts(){
         return contactService.getAllContacts();
     }
 
     @GetMapping("{contactId}/")
-    public ResponseEntity<Contact> getContactById(@PathVariable(name = "contactId") Long contactId){
+    public ResponseEntity<ContactDTO> getContactById(@PathVariable(name = "contactId") Long contactId){
         try {
             return ResponseEntity.status(HttpStatus.OK).body(contactService.getContact(contactId));
         } catch (NoSuchElementException e) {
@@ -43,12 +44,12 @@ public class ContactResource {
     }
 
     @PostMapping
-    public Long createContact(@RequestBody Contact contact){
+    public Long createContact(@RequestBody ContactDTO contact){
         return contactService.createContact(contact);
     }
 
     @PutMapping
-    public void updateContact(@RequestBody Contact contact){
+    public void updateContact(@RequestBody ContactDTO contact){
         contactService.updateContact(contact);
     }
 
